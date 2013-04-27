@@ -36,12 +36,12 @@ if (typeof engine === "undefined") { engine = {}; }
             _.each(splitString(row), function(cell, x) {
                 var tile = _.clone(data.tiles[cell[0]]);
                 var entity = self.entity_manager.newEntity();
-                var rotation = cell[1] % 4;
-                var flip = Math.floor(cell[1] / 4);
-                if (flip > 1) {
-                    rotation = Math.random(0, 3);
-                    flip = Math.random(0, 1);
-                }
+                //var rotation = cell[1] % 4;
+                //var flip = Math.floor(cell[1] / 4);
+                //if (flip > 1) {
+                //    rotation = Math.random(0, 3);
+                //    flip = Math.random(0, 1);
+                //}
                 self.entity_manager.setComponent(entity, "position", {x: x, y: y});
                 self.entity_manager.setComponents(entity, tile);
 

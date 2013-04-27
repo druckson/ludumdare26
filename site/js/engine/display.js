@@ -48,7 +48,7 @@ if (typeof engine === "undefined") { engine = {}; }
                     sheets[sheet] = {
                         file: sheet,
                         geometry: new THREE.Geometry(),
-                        material: new THREE.MeshBasicMaterial({ map: texture, transparent: true }),
+                        material: new THREE.MeshBasicMaterial({ map: texture }),
                         width: entity.graphics.sheet_width,
                         height: Math.ceil(entity.graphics.sheet_length / entity.graphics.sheet_width),
                         length: entity.graphics.sheet_length,
