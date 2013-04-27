@@ -1,0 +1,44 @@
+{
+    "tiles": {
+        "  ": {
+            "name": "Wall",
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "sheet": "/img/ground1.png",
+                "sheet_width": 4,
+                "sheet_height": 1,
+                "sheet_idx": 1,
+                "sheet_direction": -1,
+                "level": 0.0
+            }
+        },
+        "ss": {
+            "name": "Spawn",
+            "spawn": true
+        }
+    },
+    "map": [
+        "  ss  ",
+        "  ss  ",
+        "      "
+    ],
+    "entities": [
+        {
+            "name": "Singularity",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "sheet": "/img/src/ground1.png",
+                "sheet_width": 4,
+                "sheet_height": 1,
+                "sheet_idx": 1,
+                "level": 0
+            }
+        }
+    ]
+}
