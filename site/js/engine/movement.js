@@ -13,12 +13,21 @@ if (typeof engine === "undefined") { engine = {}; }
     exports.Movement.prototype.think = function(dt) {
         var entities = this.engine.entity_manager.getEntitiesWithComponents(this.components);
         _.each(entities, function(entity) {
-            entity.physics.torque = -entity.character.turn_speed*(entity.angle + entity.character.angle);
+            var turn_direction = entity.angle - entity.character.angle;
+            if (turn_direction >= Math.PI)
+                turn_direction -= 2*Math.PI;
+            if (turn_direction <= -Math.PI)
+                turn_direction += 2*Math.PI
+            entity.physics.torque = -entity.character.turn_speed*turn_direction;
+
             var x = entity.character.move * Math.sin(entity.character.angle) +
                     entity.character.strafe * Math.cos(entity.character.angle);
             var y = entity.character.move * Math.cos(entity.character.angle) -
                     entity.character.strafe * Math.sin(entity.character.angle);
             var len = x*x + y*y;
+
+            if (entity.character.move > 0)
+                console.log("Angle: " + x + ", " + y);
             if (len > 0) {
                 entity.physics.force.x = entity.character.speed * x / len;
                 entity.physics.force.y = entity.character.speed * y / len;

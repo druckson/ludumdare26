@@ -18,7 +18,7 @@
             "graphics": {
                 "type": "sprite",
                 "static": true,
-                "sheet": "/img/grass.png",
+                "sheet": "/img/wall1.png",
                 "sheet_width": 4,
                 "sheet_length": 5,
                 "sheet_idx": -1,
@@ -91,14 +91,14 @@
                     "bot": {
                         "spread": {
                             "distance": 0.5,
-                            "force": 0.8
+                            "force": 1.0
                         },
                         "gather": {
-                            "distance": 4,
+                            "distance": 1.2,
                             "force": 0.3
                         },
                         "follow": {
-                            "distance": 4,
+                            "distance": 1.0,
                             "force": 0.8
                         }
                     },
@@ -147,18 +147,30 @@
     },
     "map": [
         "w0w0w0w0w0w0w0w0w0w0w0w0w0",
-        "w0 0 0e0 0 0 0 0 0 0 0 0w0",
-        "w0 0 0 0 0 0e0 0e0 0 0 0w0",
-        "w0s0 0e0 0e0 0 0 0 0 0 0w0",
-        "w0 0 0e0 0e0 0 0e0 0 0 0w0",
-        "w0 0 0e0e0e0 0 0 0 0 0 0w0",
-        "w0 0 0 0 0 0 0 0 0 0 0 0w0",
-        "w0 0 0 0 0 0 0 0 0 0 0 0w0",
-        "w0 0e0 0 0 0 0 0 0 0e0 0w0",
-        "w0 0e0 0e0 0 0e0 0 0e0 0w0",
-        "w0 0 0 0 0 0 0 0 0 0 0 0w0",
-        "w0 0 0 0e0 0 0 0 0 0 0 0w0",
-        "w0 0 0 0 0 0 0 0 0 0 0 0w0",
+        "w0 0 0 0 0w0 0 0 0 0 0 0w0",
+        "w0 0w0w0w0w0 0 0 0w0 0 0w0",
+        "w0s0w0e0 0w0 0 0e0w0e0 0w0",
+        "w0 0w0 0 0w0 0 0e0w0e0 0w0",
+        "w0 0w0e0 0w0 0 0e0w0e0 0w0",
+        "w0 0w0 0 0w0 0 0e0w0e0 0w0",
+        "w0 0w0e0 0w0 0 0e0w0e0 0w0",
+        "w0 0w0 0 0w0 0 0e0w0e0 0w0",
+        "w0 0w0 0 0w0 0 0e0w0e0 0w0",
+        "w0 0w0 0 0w0 0 0e0w0e0 0w0",
+        "w0 0w0 0w0w0w0 0e0w0e0 0w0",
+        "w0 0 0 0 0 0w0 0 0w0 0 0w0",
+        "w0 0w0w0w0w0w0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0w0 0 0 0 0 0 0w0 0 0w0",
+        "w0 0 0 0 0 0 0 0 0w0 0 0w0",
         "w0w0w0w0w0w0w0w0w0w0w0w0w0"
     ],
     "entities": []

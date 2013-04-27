@@ -11,17 +11,20 @@ if (typeof engine === "undefined") { engine = {}; }
         var entities = this.engine.entity_manager.getEntitiesWithComponents(this.components);
         _.each(entities, function(entity) {
             entity.physics.force = new Box2D.Common.Math.b2Vec2(0, 0);
+            entity.character.move = 0;
+            entity.character.strafe = 0;
         });
     };
 
     exports.AI.prototype.think = function(dt) {
         var entities = this.engine.entity_manager.getEntitiesWithComponents(this.components);
+        var characters = this.engine.entity_manager.getEntitiesWithComponents(["character"]);
         _.each(entities, function(entity) {
             var force = new Box2D.Common.Math.b2Vec2(0, 0);
             var spread = new Box2D.Common.Math.b2Vec2(0, 0);
             var gather = new Box2D.Common.Math.b2Vec2(0, 0);
             var follow = new Box2D.Common.Math.b2Vec2(0, 0);
-            _.each(entities, function(other) {
+            _.each(characters, function(other) {
                 if (entity != other) {
                     var diff = new Box2D.Common.Math.b2Vec2(entity.position.x - other.position.x,
                                                             entity.position.y - other.position.y);
@@ -58,16 +61,17 @@ if (typeof engine === "undefined") { engine = {}; }
                 follow.Multiply(entity.bot.follow.force);
                 force.Add(follow);
             }
-            if (force.x > 0) {
-                var relax = 0.1;
+
+            if (force.Length() > 0) {
+                var relax = 0.8;
+                var new_angle = -Math.PI/2-Math.atan2(force.y, force.x);
                 entity.character.angle = relax*entity.character.angle +
-                                         (1-relax)*Math.atan(force.y /
-                                                             force.x);
+                                         (1-relax)*new_angle;
+                entity.character.speed = Math.min(force.Length(), 1);
+
+                entity.character.move = -1;
+                //entity.character.strafe = force.x;
             }
-            //console.log(entity.character.angle);
-            //entity.physics.force.SetV(force);
-            entity.character.move = -1;
-            //entity.character.strafe = 1;
         });
     };
 })(typeof exports === 'undefined'? this['engine']: exports);

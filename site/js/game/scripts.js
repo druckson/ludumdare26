@@ -149,7 +149,7 @@ if (typeof game === "undefined") { game = {}; }
                 strafe = 1;
             if (Keyboard.isDown(83))
                 move = 1;
-            this.character.angle = -Mouse.mouseX() / 360;
+            this.character.angle = (-Mouse.mouseX() / 360) % 2*Math.PI;
             this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
 
             this.character.move = move;
@@ -160,19 +160,6 @@ if (typeof game === "undefined") { game = {}; }
             //reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
             //reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
             //reticle.angle = -this.player.angle;
-        },
-        character_think: function(engine, dt) {
-            //console.log(this);
-            this.physics.torque = -this.character.turn_speed*(this.angle + this.character.angle);
-            var x = this.character.move * Math.sin(this.character.angle) +
-                    this.character.strafe * Math.cos(this.character.angle);
-            var y = this.character.move * Math.cos(this.character.angle) -
-                    this.character.strafe * Math.sin(this.character.angle);
-            var len = x*x + y*y;
-            if (len > 0) {
-                this.physics.force.x = this.character.speed * x / len;
-                this.physics.force.y = this.character.speed * y / len;
-            }
         }
     }
 })(typeof exports === 'undefined' ? this['game'] : exports);

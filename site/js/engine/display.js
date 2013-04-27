@@ -137,7 +137,7 @@ if (typeof engine === "undefined") { engine = {}; }
                 if ("level" in entity.graphics)
                     entity.graphics.mesh.position.z = entity.graphics.level;
                 if ("angle" in entity)
-                    entity.graphics.mesh.rotation.z = -entity.angle;
+                    entity.graphics.mesh.rotation.z = entity.angle;
             }
             if ("player" in entity) {
                 self.camera.position.set(entity.position.x - Math.sin(entity.character.angle)*self.cameraFollow,
