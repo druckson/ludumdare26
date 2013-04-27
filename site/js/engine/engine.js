@@ -34,7 +34,7 @@ if (typeof engine === "undefined") { engine = {}; }
 
         _.each(data.map, function(row, y) {
             _.each(splitString(row), function(cell, x) {
-                var tile = _.clone(data.tiles[cell[0]]);
+                var tile = _.cloneDeep(data.tiles[cell[0]]);
                 var entity = self.entity_manager.newEntity();
                 //var rotation = cell[1] % 4;
                 //var flip = Math.floor(cell[1] / 4);

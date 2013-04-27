@@ -9,6 +9,8 @@
         <script type="text/javascript" src="/js/lib/box2d.js"></script>
         <script type="text/javascript" src="/js/engine/engine.js"></script>
         <script type="text/javascript" src="/js/engine/entity_manager.js"></script>
+        <script type="text/javascript" src="/js/engine/ai.js"></script>
+        <script type="text/javascript" src="/js/engine/movement.js"></script>
         <script type="text/javascript" src="/js/engine/physics.js"></script>
         <script type="text/javascript" src="/js/engine/display.js"></script>
         <script type="text/javascript" src="/js/engine/scripting.js"></script>
@@ -21,6 +23,8 @@
                     var eng = new engine.Engine(true);
                     eng.loadMap(data);
                     eng.addSystem(new engine.Scripting(game.scripts));
+                    eng.addSystem(new engine.AI());
+                    eng.addSystem(new engine.Movement());
                     eng.addSystem(new engine.Physics(10, 10, 0.9));
                     eng.addSystem(new engine.Display(3, 1.4));
                     //eng.addPlayer();

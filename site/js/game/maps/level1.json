@@ -1,6 +1,19 @@
 {
     "tiles": {
         " ": {
+            "name": "Grass",
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "sheet": "/img/grass.png",
+                "sheet_width": 4,
+                "sheet_length": 5,
+                "sheet_idx": -1,
+                "sheet_direction": -1,
+                "level": 0.0
+            }
+        },
+        "w": {
             "name": "Wall",
             "graphics": {
                 "type": "sprite",
@@ -11,6 +24,14 @@
                 "sheet_idx": -1,
                 "sheet_direction": -1,
                 "level": 0.0
+            },
+            "physics": {
+                "type": 0,
+                "shapes": [{
+                    "type": "rect",
+                    "width": 1,
+                    "height": 1
+                }]
             }
         },
         "s": {
@@ -28,7 +49,7 @@
                 "character": {
                     "angle": 0,
                     "turn_speed": 0.1,
-                    "speed": 0.1
+                    "speed": 1
                 },
                 "graphics": {
                     "type": "sprite",
@@ -65,21 +86,27 @@
         },
         "e": {
             "spawn": [{
-                    "name": "Sample Player",
+                    "name": "Enemy",
                     "angle": 0,
-                    "scripts": {
-                        "think": "character_think"
-                    },
                     "bot": {
-                        "spread": 1,
-                        "gather": 1,
-                        "follow": 1
+                        "spread": {
+                            "distance": 0.5,
+                            "force": 0.8
+                        },
+                        "gather": {
+                            "distance": 4,
+                            "force": 0.3
+                        },
+                        "follow": {
+                            "distance": 4,
+                            "force": 0.8
+                        }
                     },
                     "character": {
                         "angle": 0,
                         "reticle_distance": 1,
                         "turn_speed": 0.1,
-                        "speed": 0.1
+                        "speed": 1
                     },
                     "physics": {
                         "type": 2,
@@ -102,7 +129,7 @@
                         "sheet_width": 2,
                         "sheet_length": 2,
                         "sheet_idx": 1,
-                        "level": 0.1
+                        "level": 0.01
                     }
                 }
             ],
@@ -119,17 +146,20 @@
         }
     },
     "map": [
-        " 0s0 0e0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0",
-        " 0 0 0 0 0 0 0 0 0 0"
+        "w0w0w0w0w0w0w0w0w0w0w0w0w0",
+        "w0 0 0e0 0 0 0 0 0 0 0 0w0",
+        "w0 0 0 0 0 0e0 0e0 0 0 0w0",
+        "w0s0 0e0 0e0 0 0 0 0 0 0w0",
+        "w0 0 0e0 0e0 0 0e0 0 0 0w0",
+        "w0 0 0e0e0e0 0 0 0 0 0 0w0",
+        "w0 0 0 0 0 0 0 0 0 0 0 0w0",
+        "w0 0 0 0 0 0 0 0 0 0 0 0w0",
+        "w0 0e0 0 0 0 0 0 0 0e0 0w0",
+        "w0 0e0 0e0 0 0e0 0 0e0 0w0",
+        "w0 0 0 0 0 0 0 0 0 0 0 0w0",
+        "w0 0 0 0e0 0 0 0 0 0 0 0w0",
+        "w0 0 0 0 0 0 0 0 0 0 0 0w0",
+        "w0w0w0w0w0w0w0w0w0w0w0w0w0"
     ],
     "entities": []
 }

@@ -89,8 +89,8 @@ if (typeof game === "undefined") { game = {}; }
         });
     });
 
-    var walk = 10;
-    var run = 20;
+    var walk = 1;
+    var run = 2;
 
     exports.scripts = {
         player_init: function(engine) {
@@ -152,23 +152,27 @@ if (typeof game === "undefined") { game = {}; }
             this.character.angle = -Mouse.mouseX() / 360;
             this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
 
-            var x = move * Math.sin(this.character.angle) + strafe * Math.cos(this.character.angle);
-            var y = move * Math.cos(this.character.angle) - strafe * Math.sin(this.character.angle);
-            var len = x*x + y*y;
-            if (len > 0) {
-                this.physics.force.x = this.character.speed*force * x / len;
-                this.physics.force.y = this.character.speed*force * y / len;
-            }
+            this.character.move = move;
+            this.character.strafe = strafe;
+            this.character.speed = force;
 
             //var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
             //reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
             //reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
             //reticle.angle = -this.player.angle;
-            game.scripts.character_think.apply(this, [engine, dt]);
         },
         character_think: function(engine, dt) {
             //console.log(this);
             this.physics.torque = -this.character.turn_speed*(this.angle + this.character.angle);
+            var x = this.character.move * Math.sin(this.character.angle) +
+                    this.character.strafe * Math.cos(this.character.angle);
+            var y = this.character.move * Math.cos(this.character.angle) -
+                    this.character.strafe * Math.sin(this.character.angle);
+            var len = x*x + y*y;
+            if (len > 0) {
+                this.physics.force.x = this.character.speed * x / len;
+                this.physics.force.y = this.character.speed * y / len;
+            }
         }
     }
 })(typeof exports === 'undefined' ? this['game'] : exports);
