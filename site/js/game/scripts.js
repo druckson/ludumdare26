@@ -93,13 +93,6 @@ if (typeof game === "undefined") { game = {}; }
     var run = 20;
 
     exports.scripts = {
-        test_init: function(engine) {
-            this.angle = 0.5;
-        },
-        test_think: function(engine, dt) {
-            this.angle += dt;
-            this.graphics.level = Math.sin(this.angle)
-        },
         player_init: function(engine) {
             var self = this;
             document.addEventListener('mousedown',  function(e) {
@@ -119,10 +112,27 @@ if (typeof game === "undefined") { game = {}; }
                     "level": 0.1
                 });
             });
-            var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
-            reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
-            reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
-            reticle.angle = -this.player.angle;
+
+            var reticle = engine.entity_manager.newEntity();
+
+            engine.entity_manager.setComponent(reticle, "position", {
+                x: this.position.x - this.player.reticle_distance*Math.sin(this.player.angle),
+                y: this.position.y - this.player.reticle_distance*Math.cos(this.player.angle)
+            });
+            engine.entity_manager.setComponent(reticle, "angle", -this.player.angle);
+            engine.entity_manager.setComponent(reticle, "graphics", {
+                "type": "sprite",
+                "parent": this.entity,
+                "sheet": "/img/reticle.png",
+                "width": 0.2,
+                "height": 0.2,
+                "sheet_width": 1,
+                "sheet_length": 1,
+                "sheet_idx": 0,
+                "level": 0.1
+            });
+
+            this.player.reticle = reticle;
         },
         player_think: function(engine, dt) {
             this.physics.force = {x: 0, y: 0};
@@ -139,21 +149,26 @@ if (typeof game === "undefined") { game = {}; }
                 strafe = 1;
             if (Keyboard.isDown(83))
                 move = 1;
-            this.player.angle = -Mouse.mouseX() / 360;
-            //this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
+            this.character.angle = -Mouse.mouseX() / 360;
+            this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
 
-            var x = move * Math.sin(this.player.angle) + strafe * Math.cos(this.player.angle);
-            var y = move * Math.cos(this.player.angle) - strafe * Math.sin(this.player.angle);
+            var x = move * Math.sin(this.character.angle) + strafe * Math.cos(this.character.angle);
+            var y = move * Math.cos(this.character.angle) - strafe * Math.sin(this.character.angle);
             var len = x*x + y*y;
             if (len > 0) {
-                this.physics.force.x = force * x / len;
-                this.physics.force.y = force * y / len;
+                this.physics.force.x = this.character.speed*force * x / len;
+                this.physics.force.y = this.character.speed*force * y / len;
             }
 
-            var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
-            reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
-            reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
-            reticle.angle = -this.player.angle;
+            //var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
+            //reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
+            //reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
+            //reticle.angle = -this.player.angle;
+            game.scripts.character_think.apply(this, [engine, dt]);
+        },
+        character_think: function(engine, dt) {
+            //console.log(this);
+            this.physics.torque = -this.character.turn_speed*(this.angle + this.character.angle);
         }
     }
 })(typeof exports === 'undefined' ? this['game'] : exports);

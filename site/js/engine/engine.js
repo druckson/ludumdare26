@@ -34,10 +34,24 @@ if (typeof engine === "undefined") { engine = {}; }
 
         _.each(data.map, function(row, y) {
             _.each(splitString(row), function(cell, x) {
-                var tile = data.tiles[cell];
+                var tile = _.clone(data.tiles[cell[0]]);
                 var entity = self.entity_manager.newEntity();
+                var rotation = cell[1] % 4;
+                var flip = Math.floor(cell[1] / 4);
+                if (flip > 1) {
+                    rotation = Math.random(0, 3);
+                    flip = Math.random(0, 1);
+                }
                 self.entity_manager.setComponent(entity, "position", {x: x, y: y});
                 self.entity_manager.setComponents(entity, tile);
+
+                if (tile.spawn) {
+                    _.each(tile.spawn, function(spawn) {
+                        var entity = self.entity_manager.newEntity();
+                        self.entity_manager.setComponent(entity, "position", {x: x, y: y});
+                        self.entity_manager.setComponents(entity, _.clone(spawn));
+                    });
+                }
             });
         });
 
@@ -56,19 +70,20 @@ if (typeof engine === "undefined") { engine = {}; }
             "y": position.y
         }
 
-
         var reticle = this.entity_manager.newEntity();
         var player = this.entity_manager.newEntity();
 
         this.entity_manager.setComponent(reticle, "angle", 0);
         this.entity_manager.setComponent(reticle, "position", {x: 0, y: 0});
         this.entity_manager.setComponent(reticle, "graphics", {
-            "type": "shape",
+            "type": "sprite",
             "parent": player,
-            "shape": {
-                "type": "circle",
-                "radius": 0.05
-            },
+            "sheet": "/img/reticle.png",
+            "width": 0.2,
+            "height": 0.2,
+            "sheet_width": 1,
+            "sheet_length": 1,
+            "sheet_idx": 0,
             "level": 0.1
         });
 
@@ -96,10 +111,10 @@ if (typeof engine === "undefined") { engine = {}; }
             type: 2,
             linearDamping: 8,
             restitution: 0.5,
-            shape: {
+            shapes: [{
                 type: "circle",
                 radius: 0.3,
-            }
+            }]
         });
     };
 

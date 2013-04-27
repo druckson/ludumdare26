@@ -24,7 +24,7 @@ if (typeof engine === "undefined") { engine = {}; }
         this.scene.add(directionalLight);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true});
-        this.renderer.setClearColorHex( 0x000000, 1 );
+        this.renderer.setClearColorHex( 0x000033, 1 );
         this.renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( this.renderer.domElement );
         window.addEventListener( 'resize', function() {
@@ -44,6 +44,7 @@ if (typeof engine === "undefined") { engine = {}; }
                 var sheet = entity.graphics.sheet;
                 if (!(sheet in sheets)) {
                     var texture = THREE.ImageUtils.loadTexture(sheet);
+                    texture.magFilter = THREE.NearestFilter;
                     sheets[sheet] = {
                         file: sheet,
                         geometry: new THREE.Geometry(),
@@ -54,22 +55,21 @@ if (typeof engine === "undefined") { engine = {}; }
                         level: entity.graphics.level
                     }
                 }
-                var x, y;
+                var tx=0, ty=0;
 
                 if (entity.graphics.static) {
                     geometry = sheets[sheet].geometry;
-                    x = entity.position.x;
-                    y = entity.position.y;
+                    tx = entity.position.x;
+                    ty = entity.position.y;
                 } else {
                     material = sheets[sheet].material;
                     geometry = new THREE.Geometry();
-                    x = 0;
-                    y = 0;
                 }
 
                 var sw = sheets[sheet].width;
                 var sh = sheets[sheet].height;
                 var si = entity.graphics.sheet_idx;
+                if (si == -1) si = Math.random(0, entity.graphics.sheet_length);
                 var sx = si % sw;
                 var sy = sh - Math.floor(si / sw) - 1;
 
@@ -79,10 +79,15 @@ if (typeof engine === "undefined") { engine = {}; }
                 var faceOffset = geometry.faces.length;
                 var uvOffset =   geometry.faceVertexUvs[0].length;
 
-                geometry.vertices.push(new THREE.Vector3(x-w, -y-h, 0));
-                geometry.vertices.push(new THREE.Vector3(x+w, -y-h, 0));
-                geometry.vertices.push(new THREE.Vector3(x+w, -y+h, 0));
-                geometry.vertices.push(new THREE.Vector3(x-w, -y+h, 0));
+                if (entity.graphics.width)
+                    w *= entity.graphics.width;
+                if (entity.graphics.height)
+                    h *= entity.graphics.height;
+
+                geometry.vertices.push(new THREE.Vector3(tx-w, -ty-h, 0));
+                geometry.vertices.push(new THREE.Vector3(tx+w, -ty-h, 0));
+                geometry.vertices.push(new THREE.Vector3(tx+w, -ty+h, 0));
+                geometry.vertices.push(new THREE.Vector3(tx-w, -ty+h, 0));
                 geometry.faces.push(new THREE.Face4(vertOffset, vertOffset+1, vertOffset+2, vertOffset+3));
                 geometry.faceVertexUvs[0].push([
                     new THREE.UV( 1/sw*(sx+0), 1/sh*(sy+0) ),
@@ -135,9 +140,9 @@ if (typeof engine === "undefined") { engine = {}; }
                     entity.graphics.mesh.rotation.z = -entity.angle;
             }
             if ("player" in entity) {
-                self.camera.position.set(entity.position.x - Math.sin(entity.player.angle)*self.cameraFollow,
-                                    -entity.position.y + Math.cos(entity.player.angle)*self.cameraFollow, self.cameraHeight);
-                self.camera.rotation.set(0, 0, entity.player.angle);
+                self.camera.position.set(entity.position.x - Math.sin(entity.character.angle)*self.cameraFollow,
+                                    -entity.position.y + Math.cos(entity.character.angle)*self.cameraFollow, self.cameraHeight);
+                self.camera.rotation.set(0, 0, entity.character.angle);
             }
         });
         this.renderer.render(this.scene, this.camera);

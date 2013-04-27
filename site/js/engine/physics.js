@@ -17,37 +17,43 @@ if (typeof engine === "undefined") { engine = {}; }
         this.engine = engine;
         var entities = this.engine.entity_manager.getEntitiesWithComponents(this.components);
         _.each(entities, function(entity) {
-            var fixDef = new Box2D.Dynamics.b2FixtureDef();
-            _.each(self.fixProps, function(prop) {
-                if (prop in entity.physics)
-                    fixDef[prop] = entity.physics[prop];
-            });
             var bodyDef = new Box2D.Dynamics.b2BodyDef();
-            _.each(self.bodyProps, function(prop) {
-                if (prop in entity.physics)
-                    bodyDef[prop] = entity.physics[prop];
-            });
             bodyDef.userData = entity.entity;
             bodyDef.position.Set(entity.position.x, entity.position.y);
             bodyDef.angularVelocity = 0;
             bodyDef.angularDamping = 20;
+            _.each(self.bodyProps, function(prop) {
+                if (prop in entity.physics)
+                    bodyDef[prop] = entity.physics[prop];
+            });
+
+            var fixDef = new Box2D.Dynamics.b2FixtureDef();
             fixDef.friction = 0.1;
             fixDef.density = 1;
-            switch(entity.physics.shape.type) {
-            case "rect":
-                var shape = new Box2D.Collision.Shapes.b2PolygonShape();
-                shape.SetAsBox(entity.physics.shape.width/2, entity.physics.shape.height/2);
-                fixDef.shape = shape;
-                break;
-            case "circle":
-                var shape = new Box2D.Collision.Shapes.b2CircleShape(entity.physics.shape.radius);
-                fixDef.shape = shape;
-                break;
-            }
+            _.each(self.fixProps, function(prop) {
+                if (prop in entity.physics)
+                    fixDef[prop] = entity.physics[prop];
+            });
+
             var body = self.world.CreateBody(bodyDef)
-            var fixture = body.CreateFixture(fixDef);
+            _.each(entity.physics.shapes, function(shape) {
+                switch(shape.type) {
+                case "rect":
+                    var new_shape = new Box2D.Collision.Shapes.b2PolygonShape();
+                    new_shape.SetAsBox(shape.width/2, shape.height/2);
+                    fixDef.shape = new_shape;
+                    break;
+                case "circle":
+                    var new_shape = new Box2D.Collision.Shapes.b2CircleShape(shape.radius);
+                    fixDef.shape = new_shape;
+                    break;
+                default:
+                    console.log("Invalid shape type");
+                    break;
+                }
+                body.CreateFixture(fixDef);
+            });
             entity.physics.body = body;
-            entity.physics.fixture = fixture;
         });
     };
 
@@ -58,12 +64,12 @@ if (typeof engine === "undefined") { engine = {}; }
         var body = this.world.GetBodyList();
         while (body.m_next) {
             var entity = this.engine.entity_manager.getComponentsForEntity(body.m_userData);
-            if ("force" in entity.physics)
+            if ("force" in entity.physics) {
                 body.ApplyForce(new Box2D.Common.Math.b2Vec2(entity.physics.force.x, entity.physics.force.y),
                                 new Box2D.Common.Math.b2Vec2(entity.position.x, entity.position.y));
-            if ("player" in entity) {
-                var torque = -4*(entity.angle + entity.player.angle);
-                body.ApplyTorque(torque);
+            }
+            if ("torque" in entity.physics) {
+                body.ApplyTorque(entity.physics.torque);
             }
             this.engine.entity_manager.setComponent(body.m_userData, "position", body.GetPosition());
             this.engine.entity_manager.setComponent(body.m_userData, "angle", body.GetAngle());
