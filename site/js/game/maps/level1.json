@@ -7,15 +7,25 @@
                 "static": true,
                 "sheet": "/img/ground1.png",
                 "sheet_width": 4,
-                "sheet_height": 1,
-                "sheet_idx": 1,
+                "sheet_length": 6,
+                "sheet_idx": 0,
                 "sheet_direction": -1,
                 "level": 0.0
             }
         },
         "ss": {
             "name": "Spawn",
-            "spawn": true
+            "spawn": true,
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "sheet": "/img/ground1.png",
+                "sheet_width": 4,
+                "sheet_length": 6,
+                "sheet_idx": 3,
+                "sheet_direction": -1,
+                "level": 0.0
+            }
         }
     },
     "map": [
@@ -25,17 +35,26 @@
     ],
     "entities": [
         {
-            "name": "Singularity",
+            "name": "Sample Player",
             "position": {
                 "x": 0,
                 "y": 0
             },
+            "physics": {
+                "type": 2,
+                "linearDamping": 8,
+                "resititution": 0.5,
+                "shape": {
+                    "type": "circle",
+                    "radius": 0.1
+                }
+            },
             "graphics": {
                 "type": "sprite",
                 "static": true,
-                "sheet": "/img/src/ground1.png",
-                "sheet_width": 4,
-                "sheet_height": 1,
+                "sheet": "/img/player.png",
+                "sheet_width": 2,
+                "sheet_length": 2,
                 "sheet_idx": 1,
                 "level": 0
             }

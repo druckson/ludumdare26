@@ -20,9 +20,9 @@
                 success: function(data) {
                     var eng = new engine.Engine(true);
                     eng.loadMap(data);
-                    eng.addSystem(new engine.Physics(10, 10, 0.9));
-                    eng.addSystem(new engine.Display(7, 3));
                     eng.addSystem(new engine.Scripting(game.scripts));
+                    eng.addSystem(new engine.Physics(10, 10, 0.9));
+                    eng.addSystem(new engine.Display(3, 0));
                     eng.addPlayer();
                     eng.gameLoop();
                 },

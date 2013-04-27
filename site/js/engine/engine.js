@@ -72,14 +72,6 @@ if (typeof engine === "undefined") { engine = {}; }
             "level": 0.1
         });
 
-        this.entity_manager.setComponent(reticle, "physics", {
-            type: 1,
-            shape: {
-                type: "circle",
-                radius: 0.1,
-            }
-        });
-
         this.entity_manager.setComponent(player, "position", position);
         this.entity_manager.setComponent(player, "angle", 0);
         this.entity_manager.setComponent(player, "scripts", {
@@ -89,15 +81,15 @@ if (typeof engine === "undefined") { engine = {}; }
 
         this.entity_manager.setComponent(player, "player", {
             angle: 0,
-            reticle_distance: 5,
+            reticle_distance: 1,
             reticle: reticle
         });
         this.entity_manager.setComponent(player, "graphics", {
             "type": "sprite",
-            "sheet": "/images/mob/robots.png",
-            "sheet_width": 17,
-            "sheet_height": 16,
-            "sheet_idx": 37,
+            "sheet": "/img/player.png",
+            "sheet_width": 2,
+            "sheet_length": 2,
+            "sheet_idx": 0,
             "level": 0.1
         });
         this.entity_manager.setComponent(player, "physics", {

@@ -119,6 +119,10 @@ if (typeof game === "undefined") { game = {}; }
                     "level": 0.1
                 });
             });
+            var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
+            reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
+            reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
+            reticle.angle = -this.player.angle;
         },
         player_think: function(engine, dt) {
             this.physics.force = {x: 0, y: 0};
@@ -136,7 +140,7 @@ if (typeof game === "undefined") { game = {}; }
             if (Keyboard.isDown(83))
                 move = 1;
             this.player.angle = -Mouse.mouseX() / 360;
-            this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
+            //this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
 
             var x = move * Math.sin(this.player.angle) + strafe * Math.cos(this.player.angle);
             var y = move * Math.cos(this.player.angle) - strafe * Math.sin(this.player.angle);

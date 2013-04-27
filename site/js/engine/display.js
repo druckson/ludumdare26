@@ -45,10 +45,12 @@ if (typeof engine === "undefined") { engine = {}; }
                 if (!(sheet in sheets)) {
                     var texture = THREE.ImageUtils.loadTexture(sheet);
                     sheets[sheet] = {
+                        file: sheet,
                         geometry: new THREE.Geometry(),
                         material: new THREE.MeshBasicMaterial({ map: texture, transparent: true }),
                         width: entity.graphics.sheet_width,
-                        height: entity.graphics.sheet_height,
+                        height: Math.ceil(entity.graphics.sheet_length / entity.graphics.sheet_width),
+                        length: entity.graphics.sheet_length,
                         level: entity.graphics.level
                     }
                 }
