@@ -1,0 +1,216 @@
+{
+    "tiles": {
+        " ": {
+            "name": "Grass",
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "sheet": "/img/pavement.png",
+                "transparency": false,
+                "sheet_width": 4,
+                "sheet_length": 7,
+                "sheet_idx": -1,
+                "sheet_direction": -1,
+                "level": 0.0
+            }
+        },
+        "w": {
+            "name": "Wall",
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "sheet": "/img/wall2.png",
+                "transparency": false,
+                "sheet_width": 4,
+                "sheet_length": 4,
+                "sheet_idx": -1,
+                "sheet_direction": -1,
+                "level": 0.0
+            },
+            "physics": {
+                "type": 0,
+                "shapes": {
+                    "main": {
+                        "type": "rect",
+                        "width": 1,
+                        "height": 1
+                    }
+                }
+            }
+        },
+        "s": {
+            "name": "Spawn",
+            "spawn": [{
+                "name": "Player",
+                "angle": 0,
+                "scripts": {
+                    "init": "player_init",
+                    "think": "player_think"
+                },
+                "//sounds": {
+                    "normal": {
+                        "audio/ogg": "/sound/sample.ogg"
+                    }
+                },
+                "player": {
+                    "reticle_distance": 1
+                },
+                "character": {
+                    "angle": 0,
+                    "turn_speed": 2,
+                    "speed": 10
+                },
+                "graphics": {
+                    "type": "sprite",
+                    "transparency": true,
+                    "sheet": "/img/player.png",
+                    "sheet_width": 2,
+                    "sheet_length": 2,
+                    "sheet_idx": 0,
+                    "level": 0.1
+                },
+                "physics": {
+                    "type": 2,
+                    "linearDamping": 8,
+                    "shapes": {
+                        "head": {
+                            "type": "circle",
+                            "radius": 0.2
+                        },
+                        "body": {
+                            "type": "rect",
+                            "width": 0.7,
+                            "height": 0.3
+                        }
+                    }
+                }
+            }],
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "transparency": false,
+                "sheet": "/img/pavement.png",
+                "sheet_width": 4,
+                "sheet_length": 7,
+                "sheet_idx": -1,
+                "sheet_direction": -1,
+                "level": 0.0
+            }
+        },
+        "e": {
+            "spawn": [{
+                    "name": "Enemy",
+                    "angle": 0,
+                    "bot": {
+                        "spread": {
+                            "distance": 1.0,
+                            "force": 5
+                        },
+                        "gather": {
+                            "distance": 1.3,
+                            "force": 2
+                        },
+                        "follow": {
+                            "distance": 1.3,
+                            "force": 4
+                        },
+                        "search": {
+                            "distance": 4,
+                            "force": 10
+                        }
+                    },
+                    "character": {
+                        "angle": 0,
+                        "reticle_distance": 1,
+                        "turn_speed": 2,
+                        "speed": 5
+                    },
+                    "physics": {
+                        "type": 2,
+                        "linearDamping": 8,
+                        "shapes": {
+                            "head": {
+                                "type": "circle",
+                                "radius": 0.2
+                            },
+                            "body": {
+                                "type": "rect",
+                                "width": 0.7,
+                                "height": 0.3
+                            },
+                            "scatter_sensor": {
+                                "type": "circle",
+                                "radius": 1.0,
+                                "fixDef": {
+                                    "density": 0,
+                                    "isSensor": true
+                                }
+                            }
+                        }
+                    },
+                    "graphics": {
+                        "type": "sprite",
+                        "transparency": true,
+                        "sheet": "/img/player.png",
+                        "sheet_width": 2,
+                        "sheet_length": 2,
+                        "sheet_idx": 1,
+                        "level": 0.1
+                    }
+                }
+            ],
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "transparency": false,
+                "sheet": "/img/pavement.png",
+                "sheet_width": 4,
+                "sheet_length": 7,
+                "sheet_idx": -1,
+                "sheet_direction": -1,
+                "level": 0.0
+            }
+        }
+    },
+    "map": [
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "ws                w        w                        w",
+        "w  w wwwwwwwwwww  w        ww wwwwwwwwwwwwwwwwwww   w",
+        "w  w           w  w   ee   w        w           w   w",
+        "w  w    ee        w   ee   w        w   ee      w   w",
+        "w  w    ee     w  w        w        w   ee      w   w",
+        "w  w     wwwwwww  wwwww wwwwwwww  wwwwwww w     w   w",
+        "w  wwwwwww                                w     w   w",
+        "w           eeeeee   eeee    eeeeee     w w     w   w",
+        "wwww ww     eeeeee   eeee    eeeeee     w       w   w",
+        "w     w ee  wwwwwwwwwwwwwwwwwwwwwww     wwwwwwwww   w",
+        "w     w ee ww           w         w                 w",
+        "w       ee              w         w     wwwwwwwwwwwww",
+        "w     w ee ww           w               w           w",
+        "w     w     w                     w     w    ee     w",
+        "wwwwwww     wwwww wwwwwwwwwwwwwwwwwwwwwww    ee     w",
+        "w  eeeee                                            w",
+        "w  eeeee   wwwwwwwwwwwwwww eeeeeeeeeee  w           w",
+        "w          w             w eeeeeeeeeee  w           w",
+        "w   www wwww    eeee     w eeeeeeeeeee  wwwwwwwwwwwww",
+        "w   w           eeee       eeeeeeeeeee              w",
+        "w   w      w             w                        eew",
+        "w   w      w             w    ww wwwwwwww wwwwwww eew",
+        "w   wwwwwwwwwwwwwwwwwwwwww    w        w        w eew",
+        "w    eeeeeee   eeeeeeee    ee w        w        w eew",
+        "w    eeeeeee   eeeeeeee    ee w        w        w eew",
+        "w                          ee w                 w   w",
+        "wwwwwwwwwwwwwwwwwwwwwwwwww ee wwwwwwwwww        w   w",
+        "w                        w ee w        w        w   w",
+        "w              eeeee     w ee w        w   ee   w   w",
+        "w              eeeee     w ee          w   ee   w   w",
+        "w                        w    w        w   ee   w   w",
+        "w            wwwwwwwww www    w        w        w   w",
+        "w            w           w    w        w        w   w",
+        "w            w           w    wwwwwwwwwwwwwwwwwww   w",
+        "w            w                eeeeee                w",
+        "w            w           w    eeeeee                w",
+        "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+    ],
+    "entite": []
+}
