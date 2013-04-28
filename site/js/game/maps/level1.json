@@ -43,7 +43,7 @@
                     "init": "player_init",
                     "think": "player_think"
                 },
-                "sounds": {
+                "//sounds": {
                     "normal": {
                         "audio/ogg": "/sound/sample.ogg"
                     }
@@ -106,7 +106,7 @@
                     "character": {
                         "angle": 0,
                         "reticle_distance": 1,
-                        "turn_speed": 0.4,
+                        "turn_speed": 0.8,
                         "speed": 7
                     },
                     "physics": {
@@ -148,9 +148,9 @@
         "w w   ee          w   e    w        w   e       w   w",
         "w        w     w  w        w        w           w   w",
         "w w      wwwwwww  wwwww wwwwwwww  wwwwwww w     w   w",
-        "w wwwwwwww                                w     w   w",
-        "w               eeeeeee            eeee w w     w   w",
-        "w               eeeeeee            eeee w       w   w",
+        "w wwwwwwww eeeeeeeeeeeee                  w     w   w",
+        "w     eeee eeeeeeeeeeeee           eeee w w     w   w",
+        "w     eeee eeeeeeeeeeeee           eeee w       w   w",
         "w wwwww ee  ww ww wwwwwwwwwwwwww ww     w       w   w",
         "w     w ee ww   w w               w     wwwwwwwww   w",
         "w w e w ee w    w w               w                 w",
@@ -160,18 +160,14 @@
         "w wwwww    wwwwww wwwwwwwwwwwww www     w     e  e  w",
         "w                           w     w                 w",
         "w          wwwwwwwwwwwwwwww       w     w           w",
-        "w       ee w              w w     w     w           w",
-        "w       ee w              w wwwwwww     wwwwwwwwwwwww",
-        "w       ee w              w                         w",
-        "w       ee w              wwwwwwwww  ee             w",
-        "w       ee wwwwwwwwwwwwwwww w     w  ee             w",
-        "w                           w     w  ee             w",
+        "w          w              w w     w     w           w",
+        "w          w              w wwwwwww     wwwwwwwwwwwww",
+        "w          w              w                         w",
+        "w          w              wwwwwwwww                 w",
+        "w          wwwwwwwwwwwwwwww w     w                 w",
+        "w                           w     w                 w",
         "w                           w     w                 w",
         "w                           wwwwwww                 w",
-        "w                                                   w",
-        "w                                                   w",
-        "w                                                   w",
-        "w                                                   w",
         "w                                                   w",
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
     ],
