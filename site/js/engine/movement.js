@@ -14,10 +14,10 @@ if (typeof engine === "undefined") { engine = {}; }
         var entities = this.engine.entity_manager.getEntitiesWithComponents(this.components);
         _.each(entities, function(entity) {
             var turn_direction = entity.angle - entity.character.angle;
-            if (turn_direction >= Math.PI)
-                turn_direction -= 2*Math.PI;
-            if (turn_direction <= -Math.PI)
-                turn_direction += 2*Math.PI
+            //if (turn_direction >= Math.PI)
+            //    turn_direction -= 2*Math.PI;
+            //if (turn_direction <= -Math.PI)
+            //    turn_direction += 2*Math.PI
             entity.physics.torque = -entity.character.turn_speed*turn_direction;
 
             var x = entity.character.move * Math.sin(entity.character.angle) +

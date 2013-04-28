@@ -7,6 +7,18 @@
         <script type="text/javascript" src="/js/lib/three.js"></script>
         <script type="text/javascript" src="/js/lib/Stats.js"></script>
         <script type="text/javascript" src="/js/lib/box2d.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/WebALCore.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/WebALContext.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/WebALListener.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/WebALBuffer.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/WebALSource.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/WebALSoftwareMixer.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/WebALDevice.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/devices/WebALNullDevice.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/devices/WebALTestDevice.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/devices/WebALFlashDevice.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/devices/WebALNativeDevice.js"></script>
+        <script type="text/javascript" src="/js/WebAL/src/devices/WebALBrowserDevice.js"></script>
         <script type="text/javascript" src="/js/engine/engine.js"></script>
         <script type="text/javascript" src="/js/engine/entity_manager.js"></script>
         <script type="text/javascript" src="/js/engine/ai.js"></script>
@@ -26,7 +38,7 @@
                     eng.addSystem(new engine.AI());
                     eng.addSystem(new engine.Movement());
                     eng.addSystem(new engine.Physics(10, 10, 0.9));
-                    eng.addSystem(new engine.Display(3, 1.4));
+                    eng.addSystem(new engine.Display(7, 3));
                     //eng.addPlayer();
                     eng.gameLoop();
                 },

@@ -154,7 +154,7 @@ if (typeof game === "undefined") { game = {}; }
 
             this.character.move = move;
             this.character.strafe = strafe;
-            this.character.speed = force;
+            //this.character.speed = force;
 
             //var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
             //reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);

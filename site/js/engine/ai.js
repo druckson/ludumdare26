@@ -13,6 +13,7 @@ if (typeof engine === "undefined") { engine = {}; }
             entity.physics.force = new Box2D.Common.Math.b2Vec2(0, 0);
             entity.character.move = 0;
             entity.character.strafe = 0;
+            entity.character.max_speed = entity.character.speed;
         });
     };
 
@@ -64,10 +65,10 @@ if (typeof engine === "undefined") { engine = {}; }
 
             if (force.Length() > 0) {
                 var relax = 0.8;
-                var new_angle = -Math.PI/2-Math.atan2(force.y, force.x);
+                var new_angle = -Math.atan2(force.y, force.x);
                 entity.character.angle = relax*entity.character.angle +
                                          (1-relax)*new_angle;
-                entity.character.speed = Math.min(force.Length(), 1);
+                entity.character.speed = Math.min(force.Length(), entity.character.max_speed);
 
                 entity.character.move = -1;
                 //entity.character.strafe = force.x;
