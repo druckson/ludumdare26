@@ -10,7 +10,11 @@ if (typeof engine === "undefined") { engine = {}; }
     exports.Display.prototype.init = function(engine) {
         var self = this;
         this.engine = engine;
+        console.log(THREE);
         this.scene = new THREE.Scene();
+
+        this.rectGeometry = new THREE.PlaneGeometry(1, 1);
+        this.circleGeometry = new THREE.SphereGeometry(1, 18, 8);
 
         this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.01, 100000 );
         this.camera.position.set(0, 0, this.cameraHeight);
@@ -24,7 +28,7 @@ if (typeof engine === "undefined") { engine = {}; }
         this.scene.add(directionalLight);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true});
-        this.renderer.setClearColorHex( 0x000033, 1 );
+        //this.renderer.setClearColor( new THREE.Color(0x000033) );
         this.renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( this.renderer.domElement );
         window.addEventListener( 'resize', function() {
@@ -47,83 +51,87 @@ if (typeof engine === "undefined") { engine = {}; }
                     texture.magFilter = THREE.NearestFilter;
                     sheets[sheet] = {
                         file: sheet,
-                        geometry: new THREE.Geometry(),
-                        material: new THREE.MeshBasicMaterial({ map: texture, transparent: true }),
+                        statics: new THREE.Geometry(),
+                        material: new THREE.MeshBasicMaterial({ map: texture, transparent: entity.graphics.transparency, overdraw: true }),
                         width: entity.graphics.sheet_width,
                         height: Math.ceil(entity.graphics.sheet_length / entity.graphics.sheet_width),
                         length: entity.graphics.sheet_length,
-                        level: entity.graphics.level
+                        level: entity.graphics.level,
+                        sprites: {}
                     }
                 }
-                var tx=0, ty=0;
-
-                if (entity.graphics.static) {
-                    geometry = sheets[sheet].geometry;
-                    tx = entity.position.x;
-                    ty = entity.position.y;
-                } else {
-                    material = sheets[sheet].material;
-                    geometry = new THREE.Geometry();
-                }
-
-                var sw = sheets[sheet].width;
-                var sh = sheets[sheet].height;
                 var si = entity.graphics.sheet_idx;
                 if (si == -1) si = Math.random(0, entity.graphics.sheet_length);
-                var sx = si % sw;
-                var sy = sh - Math.floor(si / sw) - 1;
+                var sprite = sheets[sheet].sprites[si];
+                if (typeof sprite === "undefined") {
+                    sprite = new THREE.Geometry();
+                    var sw = sheets[sheet].width;
+                    var sh = sheets[sheet].height;
+                    var sx = si % sw;
+                    var sy = sh - Math.floor(si / sw) - 1;
 
-                var w = 0.5;
-                var h = 0.5;
-                var vertOffset = geometry.vertices.length;
-                var faceOffset = geometry.faces.length;
-                var uvOffset =   geometry.faceVertexUvs[0].length;
+                    var w = 0.5;
+                    var h = 0.5;
+                    var vertOffset = sprite.vertices.length;
+                    var faceOffset = sprite.faces.length;
+                    var uvOffset =   sprite.faceVertexUvs[0].length;
+
+                    sprite.vertices.push(new THREE.Vector3(-w, -h, 0));
+                    sprite.vertices.push(new THREE.Vector3(+w, -h, 0));
+                    sprite.vertices.push(new THREE.Vector3(+w, +h, 0));
+                    sprite.vertices.push(new THREE.Vector3(-w, +h, 0));
+                    sprite.faces.push(new THREE.Face4(vertOffset, vertOffset+1, vertOffset+2, vertOffset+3));
+                    sprite.faceVertexUvs[0].push([
+                        new THREE.Vector2( 1/sw*(sx+0), 1/sh*(sy+0) ),
+                        new THREE.Vector2( 1/sw*(sx+1), 1/sh*(sy+0) ),
+                        new THREE.Vector2( 1/sw*(sx+1), 1/sh*(sy+1) ),
+                        new THREE.Vector2( 1/sw*(sx+0), 1/sh*(sy+1) )
+                    ]);
+                    sheets[sheet].sprites[entity.graphics.sheet_idx] = sprite;
+                }
+
+                //var material = new THREE.MeshBasicMaterial({ map: texture, transparent: true }),
+                mesh = new THREE.Mesh(sprite, sheets[sheet].material);
 
                 if (entity.graphics.width)
-                    w *= entity.graphics.width;
+                    mesh.scale.x = entity.graphics.width;
                 if (entity.graphics.height)
-                    h *= entity.graphics.height;
+                    mesh.scale.y = entity.graphics.height;
 
-                geometry.vertices.push(new THREE.Vector3(tx-w, -ty-h, 0));
-                geometry.vertices.push(new THREE.Vector3(tx+w, -ty-h, 0));
-                geometry.vertices.push(new THREE.Vector3(tx+w, -ty+h, 0));
-                geometry.vertices.push(new THREE.Vector3(tx-w, -ty+h, 0));
-                geometry.faces.push(new THREE.Face4(vertOffset, vertOffset+1, vertOffset+2, vertOffset+3));
-                geometry.faceVertexUvs[0].push([
-                    new THREE.UV( 1/sw*(sx+0), 1/sh*(sy+0) ),
-                    new THREE.UV( 1/sw*(sx+1), 1/sh*(sy+0) ),
-                    new THREE.UV( 1/sw*(sx+1), 1/sh*(sy+1) ),
-                    new THREE.UV( 1/sw*(sx+0), 1/sh*(sy+1) )
-                ]);
-
-                if (!entity.graphics.static)
-                    entity.graphics.mesh = new THREE.Mesh(geometry, material);
                 break;
             case "shape":
                 material = new THREE.MeshBasicMaterial({ color: entity.graphics.color });
                 switch(entity.graphics.shape.type) {
                 case "rect":
-                    geometry = new THREE.PlaneGeometry(entity.graphics.shape.width, entity.graphics.shape.height);
+                    mesh = new THREE.Mesh(this.rectGeometry, material);
+                    mesh.scale.x = entity.graphics.shape.width;
+                    mesh.scale.y = entity.graphics.shape.height;
                     break;
                 case "circle":
-                    geometry = new THREE.SphereGeometry(entity.graphics.shape.radius, 18, 8);
+                    mesh = new THREE.Mesh(this.circleGeometry, material);
+                    mesh.scale.x = entity.graphics.shape.radius;
+                    mesh.scale.y = entity.graphics.shape.radius;
                     break;
                 }
-                entity.graphics.mesh = new THREE.Mesh(geometry, material);
                 break;
             }
 
-            if (!entity.graphics.static) {
-                entity.graphics.mesh.position.x = entity.position.x;
-                entity.graphics.mesh.position.y = -entity.position.y;
-                entity.graphics.mesh.position.z = entity.graphics.level;
+            mesh.position.x = entity.position.x;
+            mesh.position.y = -entity.position.y;
+            mesh.position.z = entity.graphics.level;
+
+            if (entity.graphics.static) {
+                THREE.GeometryUtils.merge(sheets[sheet].statics, mesh);
+            } else {
+                console.log("Dynamic Mesh");
+                entity.graphics.mesh = mesh;
                 self.scene.add(entity.graphics.mesh);
             }
         });
 
         _.each(sheets, function(sheet) {
-            var mesh = new THREE.Mesh(sheet.geometry, sheet.material);
-            mesh.position.z = sheet.level;
+            console.log("Static Mesh");
+            var mesh = new THREE.Mesh(sheet.statics, sheet.material);
             self.scene.add(mesh);
         });
     };

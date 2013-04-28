@@ -26,4 +26,14 @@ if (typeof engine === "undefined") { engine = {}; }
             }
         });
     };
+
+    exports.Scripting.prototype.destroy = function(entity_list) {
+        var self = this;
+        var entities = this.engine.entity_manager.getEntitiesWithComponents(this.components);
+        _.each(entities, function(entity) {
+            if (entity.entity in entity_list) {
+                
+            }
+        });
+    };
 })(typeof exports === 'undefined' ? this['engine'] : exports);

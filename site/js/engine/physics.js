@@ -27,32 +27,45 @@ if (typeof engine === "undefined") { engine = {}; }
                     bodyDef[prop] = entity.physics[prop];
             });
 
-            var fixDef = new Box2D.Dynamics.b2FixtureDef();
-            fixDef.friction = 0.1;
-            fixDef.density = 1;
-            _.each(self.fixProps, function(prop) {
-                if (prop in entity.physics)
-                    fixDef[prop] = entity.physics[prop];
-            });
+            entity.physics.fixtures = {};
 
             var body = self.world.CreateBody(bodyDef)
-            _.each(entity.physics.shapes, function(shape) {
+            _.each(entity.physics.shapes, function(shape, name) {
+                var fixDef = new Box2D.Dynamics.b2FixtureDef();
+                fixDef.friction = 0.1;
+                fixDef.density = 1;
+                _.each(self.fixProps, function(prop) {
+                    if (prop in entity.physics)
+                        fixDef[prop] = entity.physics[prop];
+                    if (shape.fixDef && prop in shape.fixDef)
+                        fixDef[prop] = shape.fixDef[prop];
+                });
+                if (shape.fixDef && "filter" in shape.fixDef) {
+                    fixDef.filter = new Box2D.Dynamics.b2FilterData();
+                    fixDef.filter.categoryBits = shape.fixDef.filter.categoryBits;
+                    fixDef.filter.groupIndex = shape.fixDef.filter.groupIndex;
+                    fixDef.filter.maskBits = shape.fixDef.filter.maskBits;
+                }
+
+                var new_shape;
                 switch(shape.type) {
                 case "rect":
-                    var new_shape = new Box2D.Collision.Shapes.b2PolygonShape();
+                    new_shape = new Box2D.Collision.Shapes.b2PolygonShape();
                     new_shape.SetAsBox(shape.width/2, shape.height/2);
-                    fixDef.shape = new_shape;
                     break;
                 case "circle":
-                    var new_shape = new Box2D.Collision.Shapes.b2CircleShape(shape.radius);
-                    fixDef.shape = new_shape;
+                    new_shape = new Box2D.Collision.Shapes.b2CircleShape(shape.radius);
                     break;
                 default:
                     console.log("Invalid shape type");
                     break;
                 }
-                body.CreateFixture(fixDef);
+
+                fixDef.shape = new_shape;
+                var fixture = body.CreateFixture(fixDef);
+                entity.physics.fixtures[name] = fixture;
             });
+            console.log(entity);
             entity.physics.body = body;
         });
     };

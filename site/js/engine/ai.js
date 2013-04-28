@@ -42,7 +42,9 @@ if (typeof engine === "undefined") { engine = {}; }
                         gather.Subtract(diff);
                     }
 
-                    if (entity.bot.search && dist < entity.bot.search.distance && other.player) {
+                    // Search
+                    if (entity.bot.search && dist < entity.bot.search.distance &&
+                        other.player && !other.player.invisible) {
                         var temp = new Box2D.Common.Math.b2Vec2(diff.x, diff.y);
                         temp.Multiply(100);
                         search.Subtract(temp);
@@ -81,7 +83,10 @@ if (typeof engine === "undefined") { engine = {}; }
                 var new_angle = (Math.PI/2+Math.atan2(force.y, force.x)) % (2*Math.PI);
                 entity.character.angle = relax*entity.character.angle +
                                          (1-relax)*new_angle;
-                entity.character.speed = Math.min(force.Length(), entity.character.max_speed);
+                var speed = Math.sin(entity.character.angle)*force.x + Math.cos(entity.character.angle)*force.y;
+                if (speed < 0)
+                    entity.character.speed = entity.character.max_speed;
+                //entity.character.speed = Math.min(Math.max(0, -speed*10), entity.character.max_speed);
 
                 entity.character.move = -1;
                 //entity.character.strafe = force.x;

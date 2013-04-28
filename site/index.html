@@ -21,32 +21,105 @@
         <script type="text/javascript" src="/js/engine/scripting.js"></script>
         <script type="text/javascript" src="/js/game/scripts.js"></script>
         <script type="text/javascript">
-            $.ajax({
-                type: "GET",
-                url: '/js/game/maps/level1.json',
-                success: function(data) {
-                    var eng = new engine.Engine(true);
-                    eng.loadMap(data);
-                    eng.addSystem(new engine.Scripting(game.scripts));
-                    eng.addSystem(new engine.AI());
-                    eng.addSystem(new engine.Audio());
-                    eng.addSystem(new engine.Movement());
-                    eng.addSystem(new engine.Physics(20, 20, 0.9));
-                    eng.addSystem(new engine.Display(7, 3));
-                    //eng.addPlayer();
-                    eng.gameLoop();
-                },
-                error: function(error) {
-                    alert("Error loading map, see console for details.");
-                    console.log(error);
-                }
+
+
+            var site = (function() {
+                this.levels = [
+                    "/js/game/maps/level1.json",
+                    "/js/game/maps/level2.json"
+                ];
+                this.levelData = [];
+
+                _.each(levels, function(level) {
+                    $.ajax({
+                        type: "GET",
+                        url: level,
+                        success: function(data) {
+                            this.levelData[data.order] = data;
+                        },
+                        error: function(error) {
+                            console.log("Error loading map");
+                            console.log(error);
+                        }
+                    });
+                });
+
+
+            }());
+            ko.applyBindings(site);
+
+            $('#start').onClick(function(e) {
+                $.ajax({
+                    type: "GET",
+                    url: '/js/game/maps/level1.json',
+                    success: function(data) {
+                        var eng = new engine.Engine(true);
+                        eng.loadMap(data);
+                        eng.addSystem(new engine.Scripting(game.Scripts().table));
+                        //eng.addSystem(new engine.AI());
+                        eng.addSystem(new engine.Audio());
+                        eng.addSystem(new engine.Movement());
+                        eng.addSystem(new engine.Physics(20, 20, 0.9));
+                        eng.addSystem(new engine.Display(7, 3));
+                        //eng.addPlayer();
+                        eng.gameLoop();
+                    },
+                    error: function(error) {
+                        alert("Error loading map, see console for details.");
+                        console.log(error);
+                    }
+                });
             });
         </script>
+        <link href='http://fonts.googleapis.com/css?family=Trade+Winds|Poiret+One|Skranji:400,700|Monda:400,700|Fjalla+One|Black+Ops+One' rel='stylesheet' type='text/css'>
         <style>
             body {
                 margin: 0;
             }
+            #mainscreen {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: #800;
+                text-align: center;
+                font-family: "Skranji", serif;
+            }
+            #mainscreen h1 {
+                margin: 0.1em 0;
+                font-size: 8em;
+                color: #060;
+                text-shadow: -5px 0 #0A0, 0 5px #0A0, 5px 0 #0A0, 0 -5px #0A0;
+                width: 100%;
+                clear: both;
+            }
+            #mainscreen a {
+                font-size: 3em;
+                color: #FFF;
+                text-decoration: none;
+                margin: 1em;
+                padding: 0.6em;
+                background: #A00;
+                border-radius: 10px;
+                border-radius: 10px;
+            }
+            #overlay {
+                position: absolute;
+                right: 0;
+                padding: 10px;
+                margin: 10px;
+                background-color: #555;
+                border: 5px solid #0A0;
+            }
+            #overlay h1 {
+
+            }
         </style>
     </head>
-    <body></body>
+    <body>
+        <div id="mainscreen" data-bind="">
+            <h1>Friendly Zombies!</h1>
+            <!--<h2>They just want a hug, but you have places to go.</h2>-->
+            <a id="start" href="#">Start</a>
+        </div>
+    </body>
 </html>

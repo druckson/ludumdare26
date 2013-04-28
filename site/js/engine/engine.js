@@ -16,6 +16,7 @@ if (typeof engine === "undefined") { engine = {}; }
         this.showStats = showStats;
         this.entity_manager = new engine.EntityManager();
         this.systems = [];
+
     };
 
     exports.Engine.prototype.addSystem = function(system) {
