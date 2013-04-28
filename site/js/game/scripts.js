@@ -149,7 +149,7 @@ if (typeof game === "undefined") { game = {}; }
                 strafe = 1;
             if (Keyboard.isDown(83))
                 move = 1;
-            this.character.angle = (Mouse.mouseX() / 360) % 2*Math.PI;
+            this.character.angle = (Mouse.mouseX() / 360) % (2*Math.PI);
             this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
 
             this.character.move = move;

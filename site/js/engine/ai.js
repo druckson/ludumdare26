@@ -23,6 +23,7 @@ if (typeof engine === "undefined") { engine = {}; }
         _.each(entities, function(entity) {
             var force = new Box2D.Common.Math.b2Vec2(0, 0);
             var spread = new Box2D.Common.Math.b2Vec2(0, 0);
+            var search = new Box2D.Common.Math.b2Vec2(0, 0);
             var gather = new Box2D.Common.Math.b2Vec2(0, 0);
             var follow = new Box2D.Common.Math.b2Vec2(0, 0);
             _.each(characters, function(other) {
@@ -41,12 +42,24 @@ if (typeof engine === "undefined") { engine = {}; }
                         gather.Subtract(diff);
                     }
 
+                    if (entity.bot.search && dist < entity.bot.search.distance && other.player) {
+                        var temp = new Box2D.Common.Math.b2Vec2(diff.x, diff.y);
+                        temp.Multiply(100);
+                        search.Subtract(temp);
+                    }
+
                     // Follow
                     if (entity.bot.follow && dist < entity.bot.follow.distance) {
                         follow.Add(other.physics.body.m_linearVelocity);
                     }
                 }
             });
+
+            if (search.Length() > 0) {
+                search.Normalize();
+                search.Multiply(entity.bot.search.force);
+                force.Add(search);
+            }
             if (spread.Length() > 0) {
                 spread.Normalize();
                 spread.Multiply(entity.bot.spread.force);
@@ -64,14 +77,18 @@ if (typeof engine === "undefined") { engine = {}; }
             }
 
             if (force.Length() > 0) {
-                var relax = 0.8;
-                var new_angle = Math.PI/2+Math.atan2(force.y, force.x);
+                var relax = 0;
+                var new_angle = (Math.PI/2+Math.atan2(force.y, force.x)) % (2*Math.PI);
                 entity.character.angle = relax*entity.character.angle +
                                          (1-relax)*new_angle;
                 entity.character.speed = Math.min(force.Length(), entity.character.max_speed);
 
                 entity.character.move = -1;
                 //entity.character.strafe = force.x;
+            } else {
+                entity.character.angle = entity.angle;
+                entity.character.speed = 0;
+                entity.character.move = 0;
             }
         });
     };
