@@ -43,6 +43,11 @@
                     "init": "player_init",
                     "think": "player_think"
                 },
+                "sounds": {
+                    "normal": {
+                        "audio/ogg": "/sound/sample.ogg"
+                    }
+                },
                 "player": {
                     "reticle_distance": 1
                 },
@@ -65,7 +70,7 @@
                     "shapes": [{
                         "type": "rect",
                         "width": 0.7,
-                        "height": 0.2
+                        "height": 0.3
                     }]
                 }
             }],
@@ -110,7 +115,7 @@
                         "shapes": [{
                             "type": "rect",
                             "width": 0.7,
-                            "height": 0.2
+                            "height": 0.3
                         }]
                     },
                     "graphics": {

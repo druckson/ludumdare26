@@ -7,21 +7,14 @@
         <script type="text/javascript" src="/js/lib/three.js"></script>
         <script type="text/javascript" src="/js/lib/Stats.js"></script>
         <script type="text/javascript" src="/js/lib/box2d.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/WebALCore.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/WebALContext.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/WebALListener.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/WebALBuffer.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/WebALSource.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/WebALSoftwareMixer.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/WebALDevice.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/devices/WebALNullDevice.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/devices/WebALTestDevice.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/devices/WebALFlashDevice.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/devices/WebALNativeDevice.js"></script>
-        <script type="text/javascript" src="/js/WebAL/src/devices/WebALBrowserDevice.js"></script>
+        <script type="text/javascript" src="/js/lib/easeljs/events/EventDispatcher.js"></script>
+        <script type="text/javascript" src="/js/lib/soundjs/Sound.js"></script>
+        <script type="text/javascript" src="/js/lib/soundjs/WebAudioPlugin.js"></script>
+        <script type="text/javascript" src="/js/lib/soundjs/HTMLAudioPlugin.js"></script>
         <script type="text/javascript" src="/js/engine/engine.js"></script>
         <script type="text/javascript" src="/js/engine/entity_manager.js"></script>
         <script type="text/javascript" src="/js/engine/ai.js"></script>
+        <script type="text/javascript" src="/js/engine/audio.js"></script>
         <script type="text/javascript" src="/js/engine/movement.js"></script>
         <script type="text/javascript" src="/js/engine/physics.js"></script>
         <script type="text/javascript" src="/js/engine/display.js"></script>
@@ -36,8 +29,9 @@
                     eng.loadMap(data);
                     eng.addSystem(new engine.Scripting(game.scripts));
                     eng.addSystem(new engine.AI());
+                    eng.addSystem(new engine.Audio());
                     eng.addSystem(new engine.Movement());
-                    eng.addSystem(new engine.Physics(10, 10, 0.9));
+                    eng.addSystem(new engine.Physics(20, 20, 0.9));
                     eng.addSystem(new engine.Display(7, 3));
                     //eng.addPlayer();
                     eng.gameLoop();

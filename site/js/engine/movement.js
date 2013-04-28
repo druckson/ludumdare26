@@ -20,14 +20,12 @@ if (typeof engine === "undefined") { engine = {}; }
             //    turn_direction += 2*Math.PI
             entity.physics.torque = -entity.character.turn_speed*turn_direction;
 
-            var x = entity.character.move * Math.sin(entity.character.angle) +
+            var x = -entity.character.move * Math.sin(entity.character.angle) +
                     entity.character.strafe * Math.cos(entity.character.angle);
-            var y = entity.character.move * Math.cos(entity.character.angle) -
+            var y = entity.character.move * Math.cos(entity.character.angle) +
                     entity.character.strafe * Math.sin(entity.character.angle);
             var len = x*x + y*y;
 
-            if (entity.character.move > 0)
-                console.log("Angle: " + x + ", " + y);
             if (len > 0) {
                 entity.physics.force.x = entity.character.speed * x / len;
                 entity.physics.force.y = entity.character.speed * y / len;
