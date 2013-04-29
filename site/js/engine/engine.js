@@ -16,11 +16,18 @@ if (typeof engine === "undefined") { engine = {}; }
         this.showStats = showStats;
         this.entity_manager = new engine.EntityManager();
         this.systems = [];
-
     };
 
     exports.Engine.prototype.addSystem = function(system) {
         this.systems.push(system);
+    };
+
+    exports.Engine.prototype.endGame = function() {
+        console.log("End Game(engine)");
+        if (this.endGameCallback) {
+            this.endGameCallback();
+            this.endGameCallback = undefined;
+        }
     };
 
     exports.Engine.prototype.loadMap = function(data) {
@@ -119,9 +126,10 @@ if (typeof engine === "undefined") { engine = {}; }
         });
     };
 
-    exports.Engine.prototype.gameLoop = function() {
+    exports.Engine.prototype.gameLoop = function(endGameCallback) {
         var self = this;
         var stats;
+        self.endGameCallback = endGameCallback;
         _.each(this.systems, function(system) {
             system.init(self);
         });

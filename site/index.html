@@ -54,9 +54,12 @@
                         eng.addSystem(new engine.Audio());
                         eng.addSystem(new engine.Movement());
                         eng.addSystem(new engine.Physics(20, 20, 0.9));
-                        eng.addSystem(new engine.Display(7, 3));
+                        eng.addSystem(new engine.Display(7, 0));
                         //eng.addPlayer();
-                        eng.gameLoop();
+                        eng.gameLoop(function() {
+                            alert("You Win!");
+                            window.location.reload();
+                        });
                     };
 
                     _.each(self.levels, function(level) {

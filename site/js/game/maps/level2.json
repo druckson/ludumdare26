@@ -28,6 +28,9 @@
                 "sheet_direction": -1,
                 "level": 0.0
             },
+            "scripts": {
+                "think": "goal_think"
+            },
             "physics": {
                 "type": 0,
                 "shapes": {
@@ -116,7 +119,10 @@
                             "height": 0.3,
                             "fixDef": {
                                 "isSensor": true,
-                                "density": 0
+                                "density": 0,
+                                "filter": {
+                                    "categoryBits": 1
+                                }
                             }
                         }
                     }

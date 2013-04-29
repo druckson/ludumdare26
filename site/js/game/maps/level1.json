@@ -16,6 +16,35 @@
                 "level": 0.0
             }
         },
+        "f": {
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "sheet": "/img/grass.png",
+                "transparency": false,
+                "sheet_width": 4,
+                "sheet_length": 5,
+                "sheet_idx": -1,
+                "sheet_direction": -1,
+                "level": 0.0
+            },
+            "scripts": {
+                "think": "goal_think"
+            },
+            "physics": {
+                "type": 0,
+                "shapes": {
+                    "main": {
+                        "type": "rect",
+                        "width": 1,
+                        "height": 1,
+                        "fixDef": {
+                            "isSensor": true
+                        }
+                    }
+                }
+            }
+        },
         "w": {
             "name": "Wall",
             "graphics": {
@@ -194,7 +223,7 @@
         "w    eeee      eeeee       ee w   ee   w        w eew",
         "w    eeee      eeeee       ee w   ee   w        w eew",
         "w                          ee w                 w   w",
-        "wwwwwwww wwwwwwwwwwwwwwwww ee wwwwwwwwww        w   w",
+        "wwwwwwwwwwwwwwwwwwwwwwwwww ee wwwwwwwwww        w   w",
         "w         w              w    w        w        w   w",
         "w         w    eeeee     w    w        w   ee   w   w",
         "w         w    eeeee     w             w   ee   w   w",
@@ -203,7 +232,7 @@
         "w         w  w           w    w        w        w   w",
         "w  wwwwwwww  w           w    wwwwwwwwwwwwwwwwwww   w",
         "w            w                eee                   w",
-        "w            w           w    eee                   w",
+        "w            w           w    eee                  fw",
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
     ],
     "entite": []

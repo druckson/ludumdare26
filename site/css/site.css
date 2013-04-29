@@ -8,17 +8,17 @@ body {
     height: 100%;
     text-align: center;
     font-family: "Trade Winds", serif;
-    background-image: linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
-    background-image: -o-linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
+    background-image: linear-gradient(bottom, rgb(200,0,0) 0%, rgb(80,0,0) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(200,0,0) 0%, rgb(80,0,0) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(200,0,0) 0%, rgb(80,0,0) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(200,0,0) 0%, rgb(80,0,0) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(200,0,0) 0%, rgb(80,0,0) 100%);
 }
 #mainscreen h1 {
     margin: 0.5em 0;
     font-size: 8em;
     color: #050;
-    text-shadow: -5px 0 #090, 0 5px #070, 5px 0 #090, 0 -5px #090;
+    text-shadow: -5px 0 #0A0, 0 5px #070, 5px 0 #080, 0 -5px #0A0;
     width: 100%;
     cursor: default;
     -webkit-touch-callout: none;

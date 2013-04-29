@@ -34,6 +34,7 @@ if (typeof engine === "undefined") { engine = {}; }
                 var fixDef = new Box2D.Dynamics.b2FixtureDef();
                 fixDef.friction = 0.1;
                 fixDef.density = 1;
+                fixDef.userData = entity.entity;
                 _.each(self.fixProps, function(prop) {
                     if (prop in entity.physics)
                         fixDef[prop] = entity.physics[prop];
