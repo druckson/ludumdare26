@@ -27,7 +27,8 @@
                     var self = this;
                     self.levels = [
                         "/js/game/maps/level1.json",
-                        "/js/game/maps/level2.json"
+                        "/js/game/maps/level2.json",
+                        "/js/game/maps/level3.json"
                     ];
                     self.levelData = ko.observableArray([]);
                     self.level = ko.observable();
@@ -54,7 +55,7 @@
                         eng.addSystem(new engine.Audio());
                         eng.addSystem(new engine.Movement());
                         eng.addSystem(new engine.Physics(20, 20, 0.9));
-                        eng.addSystem(new engine.Display(7, 0));
+                        eng.addSystem(new engine.Display(5, 0));
                         //eng.addPlayer();
                         eng.gameLoop(function() {
                             alert("You Win!");
@@ -88,14 +89,17 @@
     <body>
         <div id="mainscreen" data-bind="visible: in_menu">
             <h1>Friendly Zombies!</h1>
-            <!--<h2>They just want a hug, but you have places to go.</h2>-->
             <h2>Levels:</h2>
             <div id="levels" data-bind="foreach: levelData">
                 <div class="level" data-bind="text: title, click: $root.loadLevel"></div>
             </div>
+            <div>
+                <h3>Controls: Mouse + Keybard (WASD)</h3>
+                <h3>Space: Invisibility (only 10 seconds per round)</h3>
+            </div>
         </div>
         <div id="overlay" data-bind="visible: in_game">
-            <h1 data-bind="text: level.title"></h1>
+            <h1>Invisibility: <span id="invisibility"></span></h1>
         </div>
     </body>
 </html>

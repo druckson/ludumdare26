@@ -53,7 +53,7 @@ if (typeof engine === "undefined") { engine = {}; }
                 self.entity_manager.setComponent(entity, "position", {x: x, y: y});
                 self.entity_manager.setComponents(entity, tile);
 
-                if (tile.spawn) {
+                if (tile && tile.spawn) {
                     _.each(tile.spawn, function(spawn) {
                         var entity = self.entity_manager.newEntity();
                         self.entity_manager.setComponent(entity, "position", {x: x, y: y});

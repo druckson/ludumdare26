@@ -125,6 +125,7 @@ if (typeof game === "undefined") { game = {}; }
             player_init: function(engine) {
                 var self = this;
                 self.player.invisible_timer = 10;
+                $('#invisibility').text(self.player.invisible_timer);
                 document.addEventListener('mousedown',  function(e) {
                     var reticle = engine.entity_manager.getComponentsForEntity(self.player.reticle);
                     var node = engine.entity_manager.newEntity();
@@ -142,10 +143,6 @@ if (typeof game === "undefined") { game = {}; }
                         "level": 0.1
                     });
                 });
-
-                var overlay = d3.select('body').append('div').attr('class', 'overlay')
-                var title = overlay.append('h1').text("Hello");
-                var subtitle = overlay.append("span").text("Goodbye");
 
                 var reticle = engine.entity_manager.newEntity();
 
@@ -177,8 +174,12 @@ if (typeof game === "undefined") { game = {}; }
                     force = run;
                     this.player.invisible = true;
                     this.player.invisible_timer -= dt
-                } else
+                    this.graphics.mesh.material.opacity = 0.7;
+                    $('#invisibility').text(Math.max(0, this.player.invisible_timer).toFixed(1));
+                } else {
+                    this.graphics.mesh.material.opacity = 1.0;
                     this.player.invisible = false;
+                }
                 if (Keyboard.isDown(65))
                     strafe = -1;
                 if (Keyboard.isDown(87))
@@ -204,7 +205,8 @@ if (typeof game === "undefined") { game = {}; }
 
         this.table = {
             "Level 1": scripts,
-            "Level 2": scripts
+            "Level 2": scripts,
+            "Level 3": scripts
         }
     };
 })(typeof exports === 'undefined' ? this['game'] : exports);
