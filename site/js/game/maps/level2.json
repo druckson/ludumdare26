@@ -1,4 +1,6 @@
 {
+    "title": "Level 2",
+    "order": 2,
     "tiles": {
         " ": {
             "name": "Grass",
@@ -12,6 +14,32 @@
                 "sheet_idx": -1,
                 "sheet_direction": -1,
                 "level": 0.0
+            }
+        },
+        "f": {
+            "graphics": {
+                "type": "sprite",
+                "static": true,
+                "sheet": "/img/grass.png",
+                "transparency": false,
+                "sheet_width": 4,
+                "sheet_length": 5,
+                "sheet_idx": -1,
+                "sheet_direction": -1,
+                "level": 0.0
+            },
+            "physics": {
+                "type": 0,
+                "shapes": {
+                    "main": {
+                        "type": "rect",
+                        "width": 1,
+                        "height": 1,
+                        "fixDef": {
+                            "isSensor": true
+                        }
+                    }
+                }
             }
         },
         "w": {
@@ -174,42 +202,42 @@
     },
     "map": [
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-        "ws                w        w                        w",
-        "w  w wwwwwwwwwww  w        ww wwwwwwwwwwwwwwwwwww   w",
-        "w  w           w  w   ee   w        w           w   w",
-        "w  w    ee        w   ee   w        w   ee      w   w",
-        "w  w    ee     w  w        w        w   ee      w   w",
-        "w  w     wwwwwww  wwwww wwwwwwww  wwwwwww w     w   w",
-        "w  wwwwwww                                w     w   w",
-        "w           eeeeee   eeee    eeeeee     w w     w   w",
-        "wwww ww     eeeeee   eeee    eeeeee     w       w   w",
-        "w     w ee  wwwwwwwwwwwwwwwwwwwwwww     wwwwwwwww   w",
-        "w     w ee ww           w         w                 w",
-        "w       ee              w         w     wwwwwwwwwwwww",
-        "w     w ee ww           w               w           w",
-        "w     w     w                     w     w    ee     w",
-        "wwwwwww     wwwww wwwwwwwwwwwwwwwwwwwwwww    ee     w",
-        "w  eeeee                                            w",
-        "w  eeeee   wwwwwwwwwwwwwww eeeeeeeeeee  w           w",
-        "w          w             w eeeeeeeeeee  w           w",
-        "w   www wwww    eeee     w eeeeeeeeeee  wwwwwwwwwwwww",
-        "w   w           eeee       eeeeeeeeeee              w",
-        "w   w      w             w                        eew",
-        "w   w      w             w    ww wwwwwwww wwwwwww eew",
-        "w   wwwwwwwwwwwwwwwwwwwwww    w        w        w eew",
-        "w    eeeeeee   eeeeeeee    ee w        w        w eew",
-        "w    eeeeeee   eeeeeeee    ee w        w        w eew",
-        "w                          ee w                 w   w",
-        "wwwwwwwwwwwwwwwwwwwwwwwwww ee wwwwwwwwww        w   w",
-        "w                        w ee w        w        w   w",
-        "w              eeeee     w ee w        w   ee   w   w",
-        "w              eeeee     w ee          w   ee   w   w",
-        "w                        w    w        w   ee   w   w",
-        "w            wwwwwwwww www    w        w        w   w",
-        "w            w           w    w        w        w   w",
-        "w            w           w    wwwwwwwwwwwwwwwwwww   w",
-        "w            w                eeeeee                w",
-        "w            w           w    eeeeee                w",
+        "ws ff                                               w",
+        "w  ff                                               w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
+        "w                                                   w",
         "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
     ],
     "entite": []

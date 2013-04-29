@@ -65,7 +65,6 @@ if (typeof engine === "undefined") { engine = {}; }
                 var fixture = body.CreateFixture(fixDef);
                 entity.physics.fixtures[name] = fixture;
             });
-            console.log(entity);
             entity.physics.body = body;
         });
     };

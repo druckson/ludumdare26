@@ -10,7 +10,6 @@ if (typeof engine === "undefined") { engine = {}; }
     exports.Display.prototype.init = function(engine) {
         var self = this;
         this.engine = engine;
-        console.log(THREE);
         this.scene = new THREE.Scene();
 
         this.rectGeometry = new THREE.PlaneGeometry(1, 1);

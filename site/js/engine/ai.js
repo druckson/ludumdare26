@@ -47,7 +47,10 @@ if (typeof engine === "undefined") { engine = {}; }
                         other.player && !other.player.invisible) {
                         var temp = new Box2D.Common.Math.b2Vec2(diff.x, diff.y);
                         temp.Multiply(100);
-                        search.Subtract(temp);
+                        if (other.player.repel)
+                            search.Add(temp);
+                        else
+                            search.Subtract(temp);
                     }
 
                     // Follow

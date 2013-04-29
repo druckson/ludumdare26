@@ -96,83 +96,163 @@ if (typeof game === "undefined") { game = {}; }
         var run = 2;
 
         this.table = {
-            player_init: function(engine) {
-                var self = this;
-                self.player.invisible_timer = 10;
-                document.addEventListener('mousedown',  function(e) {
-                    var reticle = engine.entity_manager.getComponentsForEntity(self.player.reticle);
-                    var node = engine.entity_manager.newEntity();
-                    engine.entity_manager.setComponent(node, "angle", 0);
-                    engine.entity_manager.setComponent(node, "position", {
-                        x: reticle.position.x,
-                        y: reticle.position.y
+            "Level 1": {
+                player_init: function(engine) {
+                    var self = this;
+                    self.player.invisible_timer = 10;
+                    document.addEventListener('mousedown',  function(e) {
+                        var reticle = engine.entity_manager.getComponentsForEntity(self.player.reticle);
+                        var node = engine.entity_manager.newEntity();
+                        engine.entity_manager.setComponent(node, "angle", 0);
+                        engine.entity_manager.setComponent(node, "position", {
+                            x: reticle.position.x,
+                            y: reticle.position.y
+                        });
+                        engine.entity_manager.setComponent(node, "graphics", {
+                            "type": "shape",
+                            "shape": {
+                                "type": "circle",
+                                "radius": 0.05
+                            },
+                            "level": 0.1
+                        });
                     });
-                    engine.entity_manager.setComponent(node, "graphics", {
-                        "type": "shape",
-                        "shape": {
-                            "type": "circle",
-                            "radius": 0.05
-                        },
+
+                    var overlay = d3.select('body').append('div').attr('class', 'overlay')
+                    var title = overlay.append('h1').text("Hello");
+                    var subtitle = overlay.append("span").text("Goodbye");
+
+                    var reticle = engine.entity_manager.newEntity();
+
+                    engine.entity_manager.setComponent(reticle, "position", {
+                        x: this.position.x - this.player.reticle_distance*Math.sin(this.player.angle),
+                        y: this.position.y - this.player.reticle_distance*Math.cos(this.player.angle)
+                    });
+                    engine.entity_manager.setComponent(reticle, "angle", -this.player.angle);
+                    engine.entity_manager.setComponent(reticle, "graphics", {
+                        "type": "sprite",
+                        "parent": this.entity,
+                        "sheet": "/img/reticle.png",
+                        "width": 0.2,
+                        "height": 0.2,
+                        "sheet_width": 1,
+                        "sheet_length": 1,
+                        "sheet_idx": 0,
                         "level": 0.1
                     });
-                });
 
-                var overlay = d3.select('body').append('div').attr('class', 'overlay')
-                var title = overlay.append('h1').text("Hello");
-                var subtitle = overlay.append("span").text("Goodbye");
+                    this.player.reticle = reticle;
+                },
+                player_think: function(engine, dt) {
+                    this.physics.force = {x: 0, y: 0};
+                    var move = 0;
+                    var strafe = 0;
+                    var force = walk;
+                    if (Keyboard.isDown(32) && this.player.invisible_timer > 0) {
+                        force = run;
+                        this.player.invisible = true;
+                        this.player.invisible_timer -= dt
+                    } else
+                        this.player.invisible = false;
+                    if (Keyboard.isDown(65))
+                        strafe = -1;
+                    if (Keyboard.isDown(87))
+                        move = -1;
+                    if (Keyboard.isDown(68))
+                        strafe = 1;
+                    if (Keyboard.isDown(83))
+                        move = 1;
+                    this.character.angle = (Mouse.mouseX() / 360) % (2*Math.PI);
+                    this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
 
-                var reticle = engine.entity_manager.newEntity();
+                    this.character.move = move;
+                    this.character.strafe = strafe;
+                    //this.character.speed = force;
 
-                engine.entity_manager.setComponent(reticle, "position", {
-                    x: this.position.x - this.player.reticle_distance*Math.sin(this.player.angle),
-                    y: this.position.y - this.player.reticle_distance*Math.cos(this.player.angle)
-                });
-                engine.entity_manager.setComponent(reticle, "angle", -this.player.angle);
-                engine.entity_manager.setComponent(reticle, "graphics", {
-                    "type": "sprite",
-                    "parent": this.entity,
-                    "sheet": "/img/reticle.png",
-                    "width": 0.2,
-                    "height": 0.2,
-                    "sheet_width": 1,
-                    "sheet_length": 1,
-                    "sheet_idx": 0,
-                    "level": 0.1
-                });
-
-                this.player.reticle = reticle;
+                    //var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
+                    //reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
+                    //reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
+                    //reticle.angle = -this.player.angle;
+                }
             },
-            player_think: function(engine, dt) {
-                this.physics.force = {x: 0, y: 0};
-                var move = 0;
-                var strafe = 0;
-                var force = walk;
-                if (Keyboard.isDown(32) && this.player.invisible_timer > 0) {
-                    force = run;
-                    this.player.invisible = true;
-                    this.player.invisible_timer -= dt
-                    console.log(this.player.invisible_timer);
-                } else
-                    this.player.invisible = false;
-                if (Keyboard.isDown(65))
-                    strafe = -1;
-                if (Keyboard.isDown(87))
-                    move = -1;
-                if (Keyboard.isDown(68))
-                    strafe = 1;
-                if (Keyboard.isDown(83))
-                    move = 1;
-                this.character.angle = (Mouse.mouseX() / 360) % (2*Math.PI);
-                this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
+            "Level 2": {
+                player_init: function(engine) {
+                    var self = this;
+                    self.player.invisible_timer = 10;
+                    document.addEventListener('mousedown',  function(e) {
+                        var reticle = engine.entity_manager.getComponentsForEntity(self.player.reticle);
+                        var node = engine.entity_manager.newEntity();
+                        engine.entity_manager.setComponent(node, "angle", 0);
+                        engine.entity_manager.setComponent(node, "position", {
+                            x: reticle.position.x,
+                            y: reticle.position.y
+                        });
+                        engine.entity_manager.setComponent(node, "graphics", {
+                            "type": "shape",
+                            "shape": {
+                                "type": "circle",
+                                "radius": 0.05
+                            },
+                            "level": 0.1
+                        });
+                    });
 
-                this.character.move = move;
-                this.character.strafe = strafe;
-                //this.character.speed = force;
+                    var overlay = d3.select('body').append('div').attr('class', 'overlay')
+                    var title = overlay.append('h1').text("Hello");
+                    var subtitle = overlay.append("span").text("Goodbye");
 
-                //var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
-                //reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
-                //reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
-                //reticle.angle = -this.player.angle;
+                    var reticle = engine.entity_manager.newEntity();
+
+                    engine.entity_manager.setComponent(reticle, "position", {
+                        x: this.position.x - this.player.reticle_distance*Math.sin(this.player.angle),
+                        y: this.position.y - this.player.reticle_distance*Math.cos(this.player.angle)
+                    });
+                    engine.entity_manager.setComponent(reticle, "angle", -this.player.angle);
+                    engine.entity_manager.setComponent(reticle, "graphics", {
+                        "type": "sprite",
+                        "parent": this.entity,
+                        "sheet": "/img/reticle.png",
+                        "width": 0.2,
+                        "height": 0.2,
+                        "sheet_width": 1,
+                        "sheet_length": 1,
+                        "sheet_idx": 0,
+                        "level": 0.1
+                    });
+
+                    this.player.reticle = reticle;
+                },
+                player_think: function(engine, dt) {
+                    this.physics.force = {x: 0, y: 0};
+                    var move = 0;
+                    var strafe = 0;
+                    var force = walk;
+                    if (Keyboard.isDown(32) && this.player.invisible_timer > 0) {
+                        force = run;
+                        this.player.invisible = true;
+                        this.player.invisible_timer -= dt
+                    } else
+                        this.player.invisible = false;
+                    if (Keyboard.isDown(65))
+                        strafe = -1;
+                    if (Keyboard.isDown(87))
+                        move = -1;
+                    if (Keyboard.isDown(68))
+                        strafe = 1;
+                    if (Keyboard.isDown(83))
+                        move = 1;
+                    this.character.angle = (Mouse.mouseX() / 360) % (2*Math.PI);
+                    this.player.reticle_distance = Math.max(0, Math.min(5, -Mouse.mouseY() / 200));
+
+                    this.character.move = move;
+                    this.character.strafe = strafe;
+                    //this.character.speed = force;
+
+                    //var reticle = engine.entity_manager.getComponentsForEntity(this.player.reticle);
+                    //reticle.position.x = this.position.x - this.player.reticle_distance*Math.sin(this.player.angle);
+                    //reticle.position.y = this.position.y - this.player.reticle_distance*Math.cos(this.player.angle);
+                    //reticle.angle = -this.player.angle;
+                }
             }
         }
     };
