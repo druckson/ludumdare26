@@ -60,20 +60,20 @@ body {
     width: auto;
     margin: 0.1em;
     padding: 0.3em 0.5em;
-    color: #0C0;
-    text-shadow: -3px 0 #040, 0 3px #040, 3px 0 #040, 0 -3px #040;
+    color: #0A0;
+    text-shadow: -3px 0 #030, 0 3px #030, 3px 0 #030, 0 -3px #030;
     background-color: #060;
     cursor: pointer;
     border-radius: 10px;
     display: inline-block;
     font-family: "Skranji", serif;
     font-size: 3em;
-    border: 3px solid #0A0;
-    background-image: linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
-    background-image: -o-linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
+    border: 3px solid #040;
+    background-image: linear-gradient(bottom,         #060 0%, #080 100%);
+    background-image: -o-linear-gradient(bottom,      #060 0%, #080 100%);
+    background-image: -moz-linear-gradient(bottom,    #060 0%, #080 100%);
+    background-image: -webkit-linear-gradient(bottom, #060 0%, #080 100%);
+    background-image: -ms-linear-gradient(bottom,     #060 0%, #080 100%);
 }
 
 #overlay {
