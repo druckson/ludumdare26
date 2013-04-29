@@ -5,20 +5,26 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #800;
     text-align: center;
     font-family: "Trade Winds", serif;
+background-image: linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
+background-image: -o-linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
+background-image: -moz-linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
+background-image: -webkit-linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
+background-image: -ms-linear-gradient(bottom, rgb(140,0,0) 0%, rgb(240,0,0) 100%);
+    
 }
 #mainscreen h1 {
     margin: 0.5em 0;
     font-size: 8em;
-    color: #060;
-    text-shadow: -5px 0 #0A0, 0 5px #0A0, 5px 0 #0A0, 0 -5px #0A0;
+    color: #050;
+    text-shadow: -5px 0 #090, 0 5px #070, 5px 0 #090, 0 -5px #090;
     width: 100%;
 }
 #mainscreen h2 {
+    font-family: "Skranji", serif;
     margin: 0.2em 0;
-    font-size: 3em;
+    font-size: 5em;
     color: #FFF;
     width: 100%;
 }
@@ -40,17 +46,20 @@ body {
     width: auto;
     margin: 0.1em;
     padding: 0.3em 0.5em;
-    color: #fff;
+    color: #0C0;
+    text-shadow: -3px 0 #040, 0 3px #040, 3px 0 #040, 0 -3px #040;
     background-color: #060;
     cursor: pointer;
     border-radius: 10px;
     display: inline-block;
     font-family: "Skranji", serif;
     font-size: 3em;
-}
-
-#gamescreen {
-
+    border: 3px solid #0A0;
+    background-image: linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(0,100,0) 0%, rgb(0,173,0) 100%);
 }
 
 #overlay {
@@ -58,8 +67,7 @@ body {
     right: 0;
     padding: 10px;
     margin: 10px;
-    background-color: #555;
-    border: 5px solid #0A0;
+    border: 1px solid #0A0;
 }
 #overlay h1 {
 
