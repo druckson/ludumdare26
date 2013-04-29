@@ -109,6 +109,15 @@
                             "type": "rect",
                             "width": 0.7,
                             "height": 0.3
+                        },
+                        "sensor": {
+                            "type": "rect",
+                            "width": 0.7,
+                            "height": 0.3,
+                            "fixDef": {
+                                "isSensor": true,
+                                "density": 0
+                            }
                         }
                     }
                 }
@@ -165,14 +174,6 @@
                                 "type": "rect",
                                 "width": 0.7,
                                 "height": 0.3
-                            },
-                            "scatter_sensor": {
-                                "type": "circle",
-                                "radius": 1.0,
-                                "fixDef": {
-                                    "density": 0,
-                                    "isSensor": true
-                                }
                             }
                         }
                     },
